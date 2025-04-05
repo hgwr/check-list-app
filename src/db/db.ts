@@ -24,3 +24,13 @@ export const initDB = async (): Promise<IDBPDatabase<DBStructure>> => {
     }
   })
 }
+
+export const addChecklistMaster = async (master: DBStructure['checklist_masters']) => {
+  const db = await initDB()
+  await db.add('checklist_masters', master)
+}
+
+export const getChecklistMasters = async (): Promise<DBStructure['checklist_masters'][]> => {
+  const db = await initDB()
+  return await db.getAll('checklist_masters')
+}
