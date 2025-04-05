@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, toRefs } from 'vue'
+import { reactive, watch } from 'vue'
 import type { ChecklistItem } from '@/db/schema'
 
 interface Props {
@@ -37,8 +37,16 @@ const emit = defineEmits(['update:modelValue'])
 
 const items = reactive([...props.modelValue])
 
+watch(
+  () => props.modelValue,
+  (newVal) => {
+    items.splice(0, items.length, ...newVal.map(item => ({ ...item })))
+  },
+  { immediate: true, deep: true }
+)
+
 const updateParent = () => {
-  emit('update:modelValue', items)
+  emit('update:modelValue', [...items])
 }
 
 const addItem = () => {
