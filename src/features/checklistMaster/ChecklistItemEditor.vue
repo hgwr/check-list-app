@@ -38,11 +38,11 @@ const emit = defineEmits(['update:modelValue'])
 const items = reactive([...props.modelValue])
 
 watch(
-  () => props.modelValue,
-  (newVal) => {
-    items.splice(0, items.length, ...newVal.map(item => ({ ...item })))
+  items,
+  () => {
+    updateParent()
   },
-  { immediate: true, deep: true }
+  { deep: true }
 )
 
 const updateParent = () => {

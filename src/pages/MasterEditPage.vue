@@ -22,6 +22,7 @@ onMounted(async () => {
     if (existing) {
       title.value = existing.title
       const items = await db.getAllFromIndex('checklist_items', 'checklistMasterId', id)
+      console.log(items)
       checklistItems.value = items.sort((a, b) => a.index - b.index)
     } else {
       alert('指定されたチェックリストマスターが見つかりませんでした。')
