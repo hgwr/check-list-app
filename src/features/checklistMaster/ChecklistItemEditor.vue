@@ -1,3 +1,4 @@
+<!-- src/features/checklistMaster/ChecklistItemEditor.vue -->
 <template>
   <div>
     <h2>チェック項目</h2>
@@ -25,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, watch } from 'vue'
+import { computed } from 'vue'
 import type { ChecklistItem } from '@/db/schema'
 
 interface Props {
@@ -35,48 +36,36 @@ interface Props {
 const props = defineProps<Props>()
 const emit = defineEmits(['update:modelValue'])
 
-const items = reactive([...props.modelValue])
-
-watch(
-  items,
-  () => {
-    updateParent()
-  },
-  { deep: true }
-)
-
-const updateParent = () => {
-  emit('update:modelValue', [...items])
-}
+const items = computed({
+  get: () => props.modelValue,
+  set: (newItems: ChecklistItem[]) => {
+    emit('update:modelValue', newItems)
+  }
+})
 
 const addItem = () => {
-  const newItem: ChecklistItem = {
+  items.value.push({
     id: crypto.randomUUID(),
     checklistMasterId: props.masterId,
-    index: items.length,
+    index: items.value.length,
     indentLevel: 0,
     content: ''
-  }
-  items.push(newItem)
-  updateParent()
+  })
 }
 
 const removeItem = (i: number) => {
-  items.splice(i, 1)
-  updateParent()
+  items.value.splice(i, 1)
 }
 
 const indentItem = (i: number, delta: number) => {
-  items[i].indentLevel = Math.max(0, items[i].indentLevel + delta)
-  updateParent()
+  items.value[i].indentLevel = Math.max(0, items.value[i].indentLevel + delta)
 }
 
 const moveItem = (i: number, delta: number) => {
   const j = i + delta
-  if (j < 0 || j >= items.length) return
-  const temp = items[i]
-  items[i] = items[j]
-  items[j] = temp
-  updateParent()
+  if (j < 0 || j >= items.value.length) return
+  const temp = items.value[i]
+  items.value[i] = items.value[j]
+  items.value[j] = temp
 }
 </script>
