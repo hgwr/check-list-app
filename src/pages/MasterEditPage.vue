@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { initDB } from '@/db/db'
 import type { ChecklistMaster, ChecklistItem } from '@/db/schema'
@@ -8,9 +8,13 @@ import ChecklistItemEditor from '@/features/checklistMaster/ChecklistItemEditor.
 const router = useRouter()
 const route = useRoute()
 
-const isEditing = ref(false)
-const title = ref('')
-const checklistItems = ref<ChecklistItem[]>([])
+const isEditing = reactive({ value: false })
+
+// 状態を1つの reactive オブジェクトにまとめる
+const masterForm = reactive({
+  title: '',
+  checklistItems: [] as ChecklistItem[],
+})
 
 const id = route.params.id as string | undefined
 
@@ -20,10 +24,11 @@ onMounted(async () => {
     const db = await initDB()
     const existing = await db.get('checklist_masters', id)
     if (existing) {
-      title.value = existing.title
+      masterForm.title = existing.title
       const items = await db.getAllFromIndex('checklist_items', 'checklistMasterId', id)
       console.log(items)
-      checklistItems.value = items.sort((a, b) => a.index - b.index)
+      // チェックリスト項目をインデックス順に並べる
+      masterForm.checklistItems = items.sort((a, b) => a.index - b.index)
     } else {
       alert('指定されたチェックリストマスターが見つかりませんでした。')
       router.push('/masters')
@@ -38,7 +43,7 @@ const saveMasterAndItems = async () => {
 
   const master: ChecklistMaster = {
     id: newId,
-    title: title.value.trim(),
+    title: masterForm.title.trim(),
     createdAt: now,
     updatedAt: now,
   }
@@ -51,9 +56,10 @@ const saveMasterAndItems = async () => {
       await db.delete('checklist_items', old.id)
     }
   }
-  for (let i = 0; i < checklistItems.value.length; i++) {
+
+  for (let i = 0; i < masterForm.checklistItems.length; i++) {
     await db.add('checklist_items', {
-      ...checklistItems.value[i],
+      ...masterForm.checklistItems[i],
       checklistMasterId: newId,
       index: i,
     })
@@ -66,14 +72,22 @@ const saveMasterAndItems = async () => {
 
 <template>
   <div>
-    <h1>マスター{{ isEditing ? '編集' : '新規作成' }}</h1>
+    <h1>マスター{{ isEditing.value ? '編集' : '新規作成' }}</h1>
 
     <div>
       <label for="title-input">タイトル:</label><br />
-      <input id="title-input" v-model="title" type="text" placeholder="チェックリストのタイトルを入力" />
+      <input
+        id="title-input"
+        v-model="masterForm.title"
+        type="text"
+        placeholder="チェックリストのタイトルを入力"
+      />
     </div>
 
-    <ChecklistItemEditor v-model="checklistItems" :master-id="id ?? 'temp'" />
+    <ChecklistItemEditor
+      v-model="masterForm.checklistItems"
+      :master-id="id ?? 'temp'"
+    />
 
     <div style="margin-top: 1rem;">
       <button @click="saveMasterAndItems">💾 保存</button>
