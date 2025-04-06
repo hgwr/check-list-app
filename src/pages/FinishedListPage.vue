@@ -1,14 +1,56 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { initDB } from '@/db/db'
+import type { Checklist } from '@/db/schema'
+
+const router = useRouter()
+const finishedChecklists = ref<Checklist[]>([])
+
+const fetchFinishedChecklists = async () => {
+  const db = await initDB()
+  const allChecklists = await db.getAll('checklists')
+  // finishedAt が null でないもの（完了済み）をフィルタ
+  finishedChecklists.value = allChecklists.filter(cl => cl.finishedAt !== null)
+  // 完了日時の降順にソートする例
+  finishedChecklists.value.sort((a, b) => (b.finishedAt || 0) - (a.finishedAt || 0))
+}
+
+onMounted(() => {
+  fetchFinishedChecklists()
+})
+
+const reactivateChecklist = async (checklist: Checklist) => {
+  const db = await initDB()
+  checklist.finishedAt = null  // アクティブ状態に戻す
+  await db.put('checklists', JSON.parse(JSON.stringify(checklist)))
+  alert(`「${checklist.title}」を使用中に戻しました。`)
+  await fetchFinishedChecklists()
+}
 </script>
 
 <template>
-    <div>
-        <h1>Finished List Page</h1>
-        <!-- Add your content here -->
-        <router-link to="/masters">マスター一覧へ</router-link>
-    </div>
+  <div>
+    <h1>使用済みチェックリスト履歴</h1>
+    <ul v-if="finishedChecklists.length">
+      <li v-for="cl in finishedChecklists" :key="cl.id" style="margin-bottom: 0.5rem;">
+        <strong>{{ cl.title }}</strong><br />
+        <small>
+          開始: {{ new Date(cl.startedAt).toLocaleString() }}<br />
+          完了: {{ cl.finishedAt ? new Date(cl.finishedAt).toLocaleString() : '未完了' }}
+        </small>
+        <br />
+        <router-link :to="`/actives/${cl.id}`">詳細へ</router-link>
+        |
+        <button @click="reactivateChecklist(cl)">使用中に戻す</button>
+      </li>
+    </ul>
+    <p v-else>現在、使用済みのチェックリストはありません。</p>
+  </div>
 </template>
 
 <style scoped lang="scss">
-/* Add your styles here */
+button {
+  margin-right: 0.5rem;
+}
 </style>

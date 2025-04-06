@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { initDB } from '@/db/db'
 import type { Checklist, ChecklistEntry } from '@/db/schema'
 
+const router = useRouter()
 const route = useRoute()
 const checklistId = route.params.id as string
 
@@ -30,6 +31,16 @@ const toggleCheck = async (entry: ChecklistEntry) => {
     console.error('チェック状態の更新でエラー:', error)
   }
 }
+
+const markAsFinished = async () => {
+  if (!checklist.value) return
+  const db = await initDB()
+  checklist.value.finishedAt = Date.now()
+  await db.put('checklists', JSON.parse(JSON.stringify(checklist.value)))
+  alert('チェックリストを使用済みにしました。')
+  router.push('/finished')
+}
+
 </script>
 
 <template>
@@ -57,6 +68,7 @@ const toggleCheck = async (entry: ChecklistEntry) => {
           </span>
         </li>
       </ul>
+        <button @click="markAsFinished">使用済みにする</button>
     </div>
     <div v-else>
       <p>チェックリストが見つかりませんでした。</p>
