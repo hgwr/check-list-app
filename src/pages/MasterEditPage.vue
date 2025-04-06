@@ -69,6 +69,11 @@ const saveMasterAndItems = async () => {
   alert('保存しました！')
   router.push('/masters')
 }
+
+const cancel = () => {
+  router.push('/masters')
+}
+
 </script>
 
 <template>
@@ -92,7 +97,7 @@ const saveMasterAndItems = async () => {
 
     <div style="margin-top: 1rem;">
       <button @click="saveMasterAndItems">💾 保存</button>
-      <router-link to="/masters">キャンセル</router-link>
+      <button @click="cancel">❌ キャンセル</button>
     </div>
   </div>
 </template>

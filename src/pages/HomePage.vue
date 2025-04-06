@@ -41,6 +41,11 @@ const goToActiveList = () => {
 const goToMasterList = () => {
   router.push('/masters')
 }
+
+const goToActiveDetail = (checklistId: string) => {
+  router.push(`/actives/${checklistId}`)
+}
+
 </script>
 
 <template>
@@ -60,7 +65,7 @@ const goToMasterList = () => {
           ><br />
           <small>開始: {{ new Date(active.startedAt).toLocaleString() }}</small
           ><br />
-          <router-link :to="`/actives/${active.id}`">実行状況</router-link>
+          <button @click="goToActiveDetail(active.id)">実行状況</button>
         </li>
       </ul>
       <button @click="goToActiveList">すべての実行中チェックリストを見る</button>
