@@ -31,7 +31,7 @@ const reactivateChecklist = async (checklist: Checklist) => {
 
 <template>
   <div>
-    <h1>使用済みチェックリスト履歴</h1>
+    <h1>履歴</h1>
     <ul v-if="finishedChecklists.length">
       <li v-for="cl in finishedChecklists" :key="cl.id" style="margin-bottom: 0.5rem;">
         <strong>{{ cl.title }}</strong><br />
@@ -40,7 +40,7 @@ const reactivateChecklist = async (checklist: Checklist) => {
           完了: {{ cl.finishedAt ? new Date(cl.finishedAt).toLocaleString() : '未完了' }}
         </small>
         <br />
-        <router-link :to="`/actives/${cl.id}`">詳細へ</router-link>
+        <router-link :to="`/actives/${cl.id}`">実行状況</router-link>
         |
         <button @click="reactivateChecklist(cl)">使用中に戻す</button>
       </li>

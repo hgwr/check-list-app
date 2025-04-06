@@ -29,7 +29,7 @@ const refreshList = async () => {
 
 <template>
   <div>
-    <h1>使用中チェックリスト一覧</h1>
+    <h1>実行中</h1>
     <button @click="refreshList">更新</button>
     <ul v-if="activeChecklists.length">
       <li
@@ -40,10 +40,10 @@ const refreshList = async () => {
         <strong>{{ checklist.title }}</strong><br />
         <small>開始: {{ new Date(checklist.startedAt).toLocaleString() }}</small>
         <br />
-        <router-link :to="`/actives/${checklist.id}`">詳細へ</router-link>
+        <router-link :to="`/actives/${checklist.id}`">実行状況</router-link>
       </li>
     </ul>
-    <p v-else>現在、使用中のチェックリストはありません。</p>
+    <p v-else>現在、実行中のチェックリストはありません。</p>
   </div>
 </template>
 

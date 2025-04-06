@@ -5,11 +5,11 @@
 <template>
   <div class="app-container">
     <header class="app-header">
-      <p><img src="/checklist-icon.png" alt="☑️" class="app-icon"> チェックリストアプリ</p>
+      <p><img src="/checklist-icon.png" alt="☑️" class="app-icon"> チェックリスト</p>
       <nav class="nav">
         <router-link to="/">ホーム</router-link>
         <router-link to="/masters">テンプレート</router-link>
-        <router-link to="/actives">使用中</router-link>
+        <router-link to="/actives">実行中</router-link>
         <router-link to="/finished">履歴</router-link>
       </nav>
     </header>

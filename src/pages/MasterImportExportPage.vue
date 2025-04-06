@@ -79,6 +79,7 @@ const importMaster = async () => {
     title: importTitle.value,
     createdAt: now,
     updatedAt: now,
+    usageCount: 0,
   }
   await db.put('checklist_masters', newMaster)
   const items = parseMarkdownToItems(importMarkdown.value)
@@ -108,7 +109,7 @@ onMounted(() => {
     <section>
       <h2>エクスポート</h2>
       <div>
-        <label for="export-select">チェックリストマスターを選択:</label>
+        <label for="export-select">テンプレートを選択:</label>
         <select
           id="export-select"
           v-model="exportMasterId"
@@ -143,7 +144,7 @@ onMounted(() => {
     <section>
       <h2>インポート</h2>
       <div>
-        <label for="import-title">新規チェックリストマスターのタイトル:</label><br />
+        <label for="import-title">新規テンプレートのタイトル:</label><br />
         <input id="import-title" v-model="importTitle" type="text" placeholder="タイトルを入力" />
       </div>
       <div style="margin-top: 1rem;">

@@ -45,7 +45,7 @@ const markAsFinished = async () => {
 
 <template>
   <div>
-    <h1>チェックリスト詳細</h1>
+    <h1>実行状況</h1>
     <div v-if="checklist">
       <h2>{{ checklist.title }}</h2>
       <p>開始: {{ new Date(checklist.startedAt).toLocaleString() }}</p>

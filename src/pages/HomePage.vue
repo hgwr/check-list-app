@@ -46,20 +46,20 @@ const goToMasterList = () => {
     
     <!-- 最近の使用中チェックリストセクション -->
     <section>
-      <h2>最近の使用中チェックリスト</h2>
+      <h2>最近の実行中チェックリスト</h2>
       <ul>
         <li v-for="active in recentActives" :key="active.id" style="margin-bottom: 1rem;">
           <strong>{{ active.title }}</strong><br />
           <small>開始: {{ new Date(active.startedAt).toLocaleString() }}</small><br />
-          <router-link :to="`/actives/${active.id}`">詳細へ</router-link>
+          <router-link :to="`/actives/${active.id}`">実行状況</router-link>
         </li>
       </ul>
-      <button @click="goToActiveList">すべての使用中チェックリストを見る</button>
+      <button @click="goToActiveList">すべての実行中チェックリストを見る</button>
     </section>
 
     <!-- よく使うチェックリストマスターセクション -->
     <section>
-      <h2>よく使うチェックリストマスター</h2>
+      <h2>よく使うテンプレート</h2>
       <ul>
         <li v-for="master in frequentMasters" :key="master.id" style="margin-bottom: 1rem;">
           <strong>{{ master.title }}</strong><br />

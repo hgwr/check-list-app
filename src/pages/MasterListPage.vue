@@ -55,7 +55,7 @@ const startUsingChecklist = async (master: ChecklistMaster) => {
     }
 
     master.usageCount = (master.usageCount || 0) + 1
-    await db.put('checklist_masters', master)
+    await db.put('checklist_masters', JSON.parse(JSON.stringify(master)))
 
     // 4. 使用中チェックリスト詳細画面に遷移（例: /actives/:id）
     router.push(`/actives/${checklistId}`)
@@ -68,7 +68,7 @@ const startUsingChecklist = async (master: ChecklistMaster) => {
 
 <template>
   <div>
-    <h1>マスター一覧</h1>
+    <h1>テンプレート一覧</h1>
 
     <div style="margin-bottom: 1rem;">
       <button @click="createNewMaster">＋ 新規作成</button>
@@ -84,7 +84,7 @@ const startUsingChecklist = async (master: ChecklistMaster) => {
         <button @click="startUsingChecklist(master)">▶ 使用を開始</button>
       </li>
     </ul>
-    <p v-else>まだチェックリストマスターがありません。</p>
+    <p v-else>まだテンプレートがありません。</p>
   </div>
 </template>
 

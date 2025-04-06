@@ -30,7 +30,7 @@ onMounted(async () => {
       // チェックリスト項目をインデックス順に並べる
       masterForm.checklistItems = items.sort((a, b) => a.index - b.index)
     } else {
-      alert('指定されたチェックリストマスターが見つかりませんでした。')
+      alert('指定されたテンプレートが見つかりませんでした。')
       router.push('/masters')
     }
   }
@@ -46,6 +46,7 @@ const saveMasterAndItems = async () => {
     title: masterForm.title.trim(),
     createdAt: now,
     updatedAt: now,
+    usageCount: 0,
   }
 
   await db.put('checklist_masters', master)
@@ -72,7 +73,7 @@ const saveMasterAndItems = async () => {
 
 <template>
   <div>
-    <h1>マスター{{ isEditing.value ? '編集' : '新規作成' }}</h1>
+    <h1>テンプレート{{ isEditing.value ? '編集' : '新規作成' }}</h1>
 
     <div>
       <label for="title-input">タイトル:</label><br />
