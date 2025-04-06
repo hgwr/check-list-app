@@ -20,6 +20,10 @@ const goToImportExport = () => {
   router.push('/masters/import-export')
 }
 
+const goToEditMaster = (master: ChecklistMaster) => {
+  router.push(`/masters/${master.id}`)
+}
+
 </script>
 
 <template>
@@ -35,7 +39,7 @@ const goToImportExport = () => {
       <li v-for="master in masters" :key="master.id" style="margin-bottom: 0.5rem;">
         <strong>{{ master.title }}</strong><br />
         <small>{{ new Date(master.updatedAt).toLocaleString() }}</small><br />
-        <router-link :to="`/masters/${master.id}`">✏ 編集</router-link>
+        <button @click="goToEditMaster(master)" >✏ 編集</button>
         |
         <button @click="startUsingChecklist(master, router)">▶ 使用を開始</button>
       </li>

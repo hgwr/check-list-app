@@ -27,6 +27,11 @@ const reactivateChecklist = async (checklist: Checklist) => {
   alert(`「${checklist.title}」を使用中に戻しました。`)
   await fetchFinishedChecklists()
 }
+
+const goToActiveDetail = (checklistId: string) => {
+  router.push(`/actives/${checklistId}`)
+}
+
 </script>
 
 <template>
@@ -40,8 +45,7 @@ const reactivateChecklist = async (checklist: Checklist) => {
           完了: {{ cl.finishedAt ? new Date(cl.finishedAt).toLocaleString() : '未完了' }}
         </small>
         <br />
-        <router-link :to="`/actives/${cl.id}`">実行状況</router-link>
-        |
+        <button @click="goToActiveDetail(cl.id)">実行状況</button>
         <button @click="reactivateChecklist(cl)">使用中に戻す</button>
       </li>
     </ul>

@@ -25,6 +25,10 @@ onMounted(() => {
 const refreshList = async () => {
   await fetchActiveChecklists()
 }
+
+const goToActiveDetail = (checklistId: string) => {
+  router.push(`/actives/${checklistId}`)
+}
 </script>
 
 <template>
@@ -40,7 +44,7 @@ const refreshList = async () => {
         <strong>{{ checklist.title }}</strong><br />
         <small>開始: {{ new Date(checklist.startedAt).toLocaleString() }}</small>
         <br />
-        <router-link :to="`/actives/${checklist.id}`">実行状況</router-link>
+        <button @click="goToActiveDetail(checklist.id)">実行状況</button>
       </li>
     </ul>
     <p v-else>現在、実行中のチェックリストはありません。</p>
