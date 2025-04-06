@@ -68,7 +68,7 @@ const startUsingChecklist = async (master: ChecklistMaster) => {
 
 <template>
   <div>
-    <h1>テンプレート一覧</h1>
+    <h1>テンプレート</h1>
 
     <div style="margin-bottom: 1rem;">
       <button @click="createNewMaster">＋ 新規作成</button>
