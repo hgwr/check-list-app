@@ -5,7 +5,7 @@
 <template>
   <div class="app-container">
     <header class="app-header">
-      <h1>📝 チェックリストアプリ</h1>
+      <p><img src="/checklist-icon.png" alt="☑️" class="app-icon"> チェックリストアプリ</p>
       <nav class="nav">
         <router-link to="/">ホーム</router-link>
         <router-link to="/masters">テンプレート</router-link>
@@ -29,6 +29,12 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+}
+
+.app-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: middle;
 }
 
 .app-header {
