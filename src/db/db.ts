@@ -27,6 +27,9 @@ export const initDB = async (): Promise<IDBPDatabase<DBStructure>> => {
 
 export const addChecklistMaster = async (master: DBStructure['checklist_masters']) => {
   const db = await initDB()
+  if (master.usageCount === undefined) {
+    master.usageCount = 0
+  }
   await db.add('checklist_masters', master)
 }
 

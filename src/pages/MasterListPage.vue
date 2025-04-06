@@ -54,6 +54,9 @@ const startUsingChecklist = async (master: ChecklistMaster) => {
       await db.add('checklist_entries', entry)
     }
 
+    master.usageCount = (master.usageCount || 0) + 1
+    await db.put('checklist_masters', master)
+
     // 4. 使用中チェックリスト詳細画面に遷移（例: /actives/:id）
     router.push(`/actives/${checklistId}`)
   } catch (error) {

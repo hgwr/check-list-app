@@ -3,6 +3,7 @@ export interface ChecklistMaster {
   title: string
   createdAt: number
   updatedAt: number
+  usageCount: number
 }
 
 export interface ChecklistItem {
