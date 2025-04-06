@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { initDB } from '@/db/db'
 import type { Checklist, ChecklistMaster } from '@/db/schema'
+import { startUsingChecklist } from '@/services/checklistService'
 
 const router = useRouter()
 const recentActives = ref<Checklist[]>([])
@@ -25,6 +26,10 @@ const loadDashboardData = async () => {
   frequentMasters.value = allMasters
     .sort((a: ChecklistMaster, b: ChecklistMaster) => b.usageCount - a.usageCount)
     .slice(0, 3)
+}
+
+const onStartUsingTemplate = (master: ChecklistMaster) => {
+  startUsingChecklist(master, router)
 }
 
 onMounted(() => {
@@ -64,7 +69,7 @@ const goToMasterList = () => {
         <li v-for="master in frequentMasters" :key="master.id" style="margin-bottom: 1rem;">
           <strong>{{ master.title }}</strong><br />
           <small>使用回数: {{ master.usageCount }}</small><br />
-          <router-link :to="`/masters/${master.id}`">編集する</router-link>
+          <button @click="onStartUsingTemplate(master)">使用を開始</button>
         </li>
       </ul>
       <button @click="goToMasterList">すべてのテンプレートを見る</button>
