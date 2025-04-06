@@ -16,15 +16,19 @@ onMounted(async () => {
   checklist.value = await db.get('checklists', checklistId)
   // 対応するチェックリスト項目の取得と並び替え
   const fetchedEntries = await db.getAllFromIndex('checklist_entries', 'checklistId', checklistId)
+  console.log(fetchedEntries)
   entries.value = fetchedEntries.sort((a, b) => a.index - b.index)
 })
 
 // チェックボックスのオン／オフで、項目の状態を更新
 const toggleCheck = async (entry: ChecklistEntry) => {
-  entry.checked = !entry.checked
-  entry.checkedAt = entry.checked ? Date.now() : null
-  const db = await initDB()
-  await db.put('checklist_entries', entry)
+  try {
+    entry.checkedAt = entry.checked ? Date.now() : null
+    const db = await initDB()
+    await db.put('checklist_entries', JSON.parse(JSON.stringify(entry)))
+  } catch (error) {
+    console.error('チェック状態の更新でエラー:', error)
+  }
 }
 </script>
 
@@ -43,7 +47,7 @@ const toggleCheck = async (entry: ChecklistEntry) => {
           <label>
             <input
               type="checkbox"
-              :checked="entry.checked"
+              v-model="entry.checked"
               @change="toggleCheck(entry)"
             />
             {{ entry.content }}
