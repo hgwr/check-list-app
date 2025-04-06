@@ -3,10 +3,10 @@
 </script>
 
 <template>
-  <div class="app-container">
+  <div class="container">
     <header class="app-header">
       <p><img src="/checklist-icon.png" alt="☑️" class="app-icon"> チェックリスト</p>
-      <nav class="nav">
+      <nav class="navbar">
         <router-link to="/">ホーム</router-link>
         <router-link to="/masters">テンプレート</router-link>
         <router-link to="/actives">実行中</router-link>
@@ -25,11 +25,6 @@
 </template>
 
 <style scoped>
-.app-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
 
 .app-icon {
   width: 1.5rem;
@@ -41,12 +36,6 @@
   background-color: #f4f4f4;
   padding: 1rem;
   border-bottom: 1px solid #ccc;
-}
-
-.nav {
-  margin-top: 0.5rem;
-  display: flex;
-  gap: 1rem;
 }
 
 .app-main {
