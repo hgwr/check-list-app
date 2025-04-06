@@ -33,9 +33,12 @@
 }
 
 .app-header {
-  background-color: #f4f4f4;
+  background-color: var(--background-color);
   padding: 1rem;
   border-bottom: 1px solid #ccc;
+  text-align: center;
+  font-size: var(--heading-size);
+  font-weight: bold;
 }
 
 .app-main {
