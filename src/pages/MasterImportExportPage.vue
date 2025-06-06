@@ -95,6 +95,10 @@ const importMaster = async () => {
 
 const router = useRouter()
 
+const copyToClipboard = () => {
+  navigator.clipboard.writeText(exportMarkdown.value)
+}
+
 onMounted(() => {
   loadMasters()
 })
@@ -134,7 +138,7 @@ onMounted(() => {
         ></textarea>
       </div>
       <div>
-        <button @click="navigator.clipboard.writeText(exportMarkdown)">クリップボードにコピー</button>
+        <button @click="copyToClipboard">クリップボードにコピー</button>
       </div>
     </section>
 

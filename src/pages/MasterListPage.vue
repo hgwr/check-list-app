@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import type { ChecklistMaster, Checklist, ChecklistEntry } from '@/db/schema'
-import { getChecklistMasters, initDB } from '@/db/db'
+import type { ChecklistMaster } from '@/db/schema'
+import { getChecklistMasters } from '@/db/db'
 import { startUsingChecklist } from '@/services/checklistService'
 
 const router = useRouter()
