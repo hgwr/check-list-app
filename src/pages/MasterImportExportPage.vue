@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { initDB } from '@/db/db'
 import type { ChecklistMaster, ChecklistItem } from '@/db/schema'
+import { parseMarkdownToItems } from '@/lib/markdown'
 
 // For export section
 const exportMasterId = ref<string>('')
@@ -38,32 +39,7 @@ const exportMasterToMarkdown = async (masterId: string) => {
 const importMarkdown = ref<string>('')
 const importTitle = ref<string>('')
 
-// Function to parse markdown text into checklist items
-const parseMarkdownToItems = (md: string): ChecklistItem[] => {
-  const lines = md.split('\n')
-  const items: ChecklistItem[] = []
-  let index = 0
-  for (const line of lines) {
-    // Skip empty lines and header lines
-    if (line.trim() === '' || line.trim().startsWith('#')) continue
-    // Regex: optional spaces, "- [ ]" or "- [x]" then a space and content
-    const match = line.match(/^(\s*)- \[( |x)\] (.*)$/)
-    if (match) {
-      const indentSpaces = match[1]
-      const indentLevel = Math.floor(indentSpaces.length / 2)
-      const content = match[3]
-      items.push({
-        id: crypto.randomUUID(),
-        checklistMasterId: '', // will be set later
-        index: index,
-        indentLevel,
-        content,
-      })
-      index++
-    }
-  }
-  return items
-}
+// parseMarkdownToItems is imported from '@/lib/markdown'
 
 // Import a checklist master from markdown text
 const importMaster = async () => {
