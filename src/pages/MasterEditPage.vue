@@ -26,7 +26,6 @@ onMounted(async () => {
     if (existing) {
       masterForm.title = existing.title
       const items = await db.getAllFromIndex('checklist_items', 'checklistMasterId', id)
-      console.log(items)
       // チェックリスト項目をインデックス順に並べる
       masterForm.checklistItems = items.sort((a, b) => a.index - b.index)
     } else {
