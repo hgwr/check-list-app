@@ -7,7 +7,7 @@ export function parseMarkdownToItems(md: string): ChecklistItem[] {
   for (const line of lines) {
     // Skip empty lines and header lines
     if (line.trim() === '' || line.trim().startsWith('#')) continue
-    const match = line.match(/^(\s*)- \[( |x)\] (.*)$/)
+    const match = line.match(/^(\s*)- \[( |x|X)\] (.*)$/)
     if (match) {
       const indentSpaces = match[1]
       const indentLevel = Math.floor(indentSpaces.length / 2)
