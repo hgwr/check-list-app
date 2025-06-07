@@ -14,6 +14,8 @@ const isEditing = reactive({ value: false })
 const masterForm = reactive({
   title: '',
   checklistItems: [] as ChecklistItem[],
+  createdAt: 0,
+  usageCount: 0,
 })
 
 const id = route.params.id as string | undefined
@@ -25,6 +27,8 @@ onMounted(async () => {
     const existing = await db.get('checklist_masters', id)
     if (existing) {
       masterForm.title = existing.title
+      masterForm.createdAt = existing.createdAt
+      masterForm.usageCount = existing.usageCount
       const items = await db.getAllFromIndex('checklist_items', 'checklistMasterId', id)
       console.log(items)
       // チェックリスト項目をインデックス順に並べる
@@ -44,9 +48,9 @@ const saveMasterAndItems = async () => {
   const master: ChecklistMaster = {
     id: newId,
     title: masterForm.title.trim(),
-    createdAt: now,
+    createdAt: isEditing.value ? masterForm.createdAt : now,
     updatedAt: now,
-    usageCount: 0,
+    usageCount: isEditing.value ? masterForm.usageCount : 0,
   }
 
   await db.put('checklist_masters', master)
