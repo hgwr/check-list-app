@@ -49,61 +49,43 @@ const goToActiveDetail = (checklistId: string) => {
 </script>
 
 <template>
-  <div>
-    <h1>ダッシュボード</h1>
+  <div class="space-y-8">
+    <h1 class="text-2xl font-bold">ダッシュボード</h1>
 
     <!-- 最近の使用中チェックリストセクション -->
-    <section>
-      <h2>最近の実行中チェックリスト</h2>
-      <ul>
+    <section class="space-y-2">
+      <h2 class="text-xl font-semibold">最近の実行中チェックリスト</h2>
+      <ul class="space-y-4 list-none p-0">
         <li
           v-for="active in recentActives"
           :key="active.id"
-          style="margin-bottom: 1rem"
+          class="border p-4 rounded bg-white shadow"
         >
-          <strong>{{ active.title }}</strong
-          ><br />
-          <small>開始: {{ new Date(active.startedAt).toLocaleString() }}</small
-          ><br />
-          <button @click="goToActiveDetail(active.id)">実行状況</button>
+          <strong class="block">{{ active.title }}</strong>
+          <small class="block">開始: {{ new Date(active.startedAt).toLocaleString() }}</small>
+          <button class="btn mt-2" @click="goToActiveDetail(active.id)">実行状況</button>
         </li>
       </ul>
-      <button @click="goToActiveList">すべての実行中チェックリストを見る</button>
+      <button class="btn" @click="goToActiveList">すべての実行中チェックリストを見る</button>
     </section>
 
     <!-- よく使うチェックリストマスターセクション -->
-    <section>
-      <h2>よく使うテンプレート</h2>
-      <ul>
+    <section class="space-y-2">
+      <h2 class="text-xl font-semibold">よく使うテンプレート</h2>
+      <ul class="space-y-4 list-none p-0">
         <li
           v-for="master in frequentMasters"
           :key="master.id"
-          style="margin-bottom: 1rem"
+          class="border p-4 rounded bg-white shadow"
         >
-          <strong>{{ master.title }}</strong
-          ><br />
-          <small>使用回数: {{ master.usageCount }}</small
-          ><br />
-          <button @click="onStartUsingTemplate(master)">使用を開始</button>
+          <strong class="block">{{ master.title }}</strong>
+          <small class="block">使用回数: {{ master.usageCount }}</small>
+          <button class="btn mt-2" @click="onStartUsingTemplate(master)">使用を開始</button>
         </li>
       </ul>
-      <button @click="goToMasterList">すべてのテンプレートを見る</button>
+      <button class="btn" @click="goToMasterList">すべてのテンプレートを見る</button>
     </section>
   </div>
 </template>
 
-<style scoped lang="scss">
-section {
-  margin-bottom: 2rem;
-}
-ul {
-  list-style: none;
-  padding: 0;
-}
-li {
-  margin-bottom: 0.5rem;
-}
-button {
-  margin-top: 0.5rem;
-}
-</style>
+

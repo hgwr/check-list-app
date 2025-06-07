@@ -81,16 +81,17 @@ const cancel = () => {
 </script>
 
 <template>
-  <div>
-    <h1>テンプレート{{ isEditing.value ? '編集' : '新規作成' }}</h1>
+  <div class="space-y-4">
+    <h1 class="text-2xl font-bold">テンプレート{{ isEditing.value ? '編集' : '新規作成' }}</h1>
 
-    <div>
-      <label for="title-input">タイトル:</label><br />
+    <div class="space-y-1">
+      <label for="title-input">タイトル:</label>
       <input
         id="title-input"
         v-model="masterForm.title"
         type="text"
         placeholder="チェックリストのタイトルを入力"
+        class="border rounded p-2 w-full max-w-md"
       />
     </div>
 
@@ -99,22 +100,11 @@ const cancel = () => {
       :master-id="id ?? 'temp'"
     />
 
-    <div style="margin-top: 1rem;">
-      <button @click="saveMasterAndItems">💾 保存</button>
-      <button @click="cancel">❌ キャンセル</button>
+    <div class="mt-4 space-x-2">
+      <button class="btn" @click="saveMasterAndItems">💾 保存</button>
+      <button class="btn" @click="cancel">❌ キャンセル</button>
     </div>
   </div>
 </template>
 
-<style scoped lang="scss">
-input {
-  width: 100%;
-  max-width: 400px;
-  padding: 0.5rem;
-  margin-top: 0.5rem;
-  font-size: 1rem;
-}
-button {
-  margin-right: 1rem;
-}
-</style>
+

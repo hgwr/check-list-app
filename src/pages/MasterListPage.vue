@@ -27,29 +27,26 @@ const goToEditMaster = (master: ChecklistMaster) => {
 </script>
 
 <template>
-  <div>
-    <h1>テンプレート</h1>
+  <div class="space-y-4">
+    <h1 class="text-2xl font-bold">テンプレート</h1>
 
-    <div style="margin-bottom: 1rem;">
-      <button @click="createNewMaster">＋ 新規作成</button>
-      <button @click="goToImportExport">⬆⬇ インポート・エクスポート</button>
+    <div class="space-x-2">
+      <button class="btn" @click="createNewMaster">＋ 新規作成</button>
+      <button class="btn" @click="goToImportExport">⬆⬇ インポート・エクスポート</button>
     </div>
 
-    <ul v-if="masters.length">
-      <li v-for="master in masters" :key="master.id" style="margin-bottom: 0.5rem;">
-        <strong>{{ master.title }}</strong><br />
-        <small>{{ new Date(master.updatedAt).toLocaleString() }}</small><br />
-        <button @click="goToEditMaster(master)" >✏ 編集</button>
-        |
-        <button @click="startUsingChecklist(master, router)">▶ 使用を開始</button>
+    <ul v-if="masters.length" class="space-y-2 list-none p-0">
+      <li v-for="master in masters" :key="master.id" class="border p-4 rounded bg-white shadow">
+        <strong class="block">{{ master.title }}</strong>
+        <small class="block">{{ new Date(master.updatedAt).toLocaleString() }}</small>
+        <div class="mt-2 space-x-2">
+          <button class="btn" @click="goToEditMaster(master)">✏ 編集</button>
+          <button class="btn" @click="startUsingChecklist(master, router)">▶ 使用を開始</button>
+        </div>
       </li>
     </ul>
     <p v-else>まだテンプレートがありません。</p>
   </div>
 </template>
 
-<style scoped lang="scss">
-button {
-  margin-right: 0.5rem;
-}
-</style>
+
