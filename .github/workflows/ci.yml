@@ -21,3 +21,28 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm test -- --run
+
+  deploy-pages:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./dist
+      - id: deploy
+        uses: actions/deploy-pages@v1
