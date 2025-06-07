@@ -17,7 +17,6 @@ onMounted(async () => {
   checklist.value = await db.get('checklists', checklistId)
   // 対応するチェックリスト項目の取得と並び替え
   const fetchedEntries = await db.getAllFromIndex('checklist_entries', 'checklistId', checklistId)
-  console.log(fetchedEntries)
   entries.value = fetchedEntries.sort((a, b) => a.index - b.index)
 })
 
