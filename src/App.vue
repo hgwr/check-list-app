@@ -3,55 +3,28 @@
 </script>
 
 <template>
-  <div class="container">
-    <header class="app-header">
-      <p><img src="/checklist-icon.png" alt="☑️" class="app-icon"> チェックリスト</p>
-      <nav class="navbar">
-        <router-link to="/">ホーム</router-link>
-        <router-link to="/masters">テンプレート</router-link>
-        <router-link to="/actives">実行中</router-link>
-        <router-link to="/finished">履歴</router-link>
+  <div class="container mx-auto max-w-4xl p-4 flex flex-col min-h-screen">
+    <header class="bg-gray-100 border-b p-4 text-center text-xl font-bold flex flex-col items-center gap-2">
+      <p class="flex items-center gap-2">
+        <img src="/checklist-icon.png" alt="☑️" class="w-6 h-6" />
+        チェックリスト
+      </p>
+      <nav class="flex gap-4 justify-center">
+        <router-link class="text-blue-500 hover:underline" to="/">ホーム</router-link>
+        <router-link class="text-blue-500 hover:underline" to="/masters">テンプレート</router-link>
+        <router-link class="text-blue-500 hover:underline" to="/actives">実行中</router-link>
+        <router-link class="text-blue-500 hover:underline" to="/finished">履歴</router-link>
       </nav>
     </header>
 
-    <main class="app-main">
+    <main class="flex-1 p-4">
       <router-view />
     </main>
 
-    <footer class="app-footer">
+    <footer class="text-center p-2 bg-gray-50 border-t text-xs">
       <small>© 2025 moreslowly.jp</small>
     </footer>
   </div>
 </template>
 
-<style scoped>
 
-.app-icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  vertical-align: middle;
-}
-
-.app-header {
-  background-color: var(--background-color);
-  padding: 1rem;
-  border-bottom: 1px solid #ccc;
-  text-align: center;
-  font-size: var(--heading-size);
-  font-weight: bold;
-}
-
-.app-main {
-  flex: 1;
-  padding: 1rem;
-  overflow-y: auto;
-}
-
-.app-footer {
-  text-align: center;
-  padding: 0.5rem;
-  background-color: #f9f9f9;
-  border-top: 1px solid #ccc;
-  font-size: 0.75rem;
-}
-</style>

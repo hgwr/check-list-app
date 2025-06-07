@@ -81,19 +81,20 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <h1>インポート・エクスポート</h1>
+  <div class="space-y-8">
+    <h1 class="text-2xl font-bold">インポート・エクスポート</h1>
     <hr />
 
     <!-- Export Section -->
-    <section>
-      <h2>エクスポート</h2>
-      <div>
+    <section class="space-y-2">
+      <h2 class="text-xl font-semibold">エクスポート</h2>
+      <div class="space-y-1">
         <label for="export-select">テンプレートを選択:</label>
         <select
           id="export-select"
           v-model="exportMasterId"
           @change="exportMasterToMarkdown(exportMasterId)"
+          class="border rounded p-2"
         >
           <option value="" disabled selected>選択してください</option>
           <option
@@ -105,49 +106,42 @@ onMounted(() => {
           </option>
         </select>
       </div>
-      <div style="margin-top: 1rem;">
+      <div class="mt-4">
         <textarea
           v-model="exportMarkdown"
           rows="10"
-          style="width: 100%;"
+          class="w-full border rounded p-2"
           readonly
         ></textarea>
       </div>
       <div>
-        <button @click="copyToClipboard">クリップボードにコピー</button>
+        <button class="btn" @click="copyToClipboard">クリップボードにコピー</button>
       </div>
     </section>
 
     <hr />
 
     <!-- Import Section -->
-    <section>
-      <h2>インポート</h2>
-      <div>
-        <label for="import-title">新規テンプレートのタイトル:</label><br />
-        <input id="import-title" v-model="importTitle" type="text" placeholder="タイトルを入力" />
+    <section class="space-y-2">
+      <h2 class="text-xl font-semibold">インポート</h2>
+      <div class="space-y-1">
+        <label for="import-title">新規テンプレートのタイトル:</label>
+        <input id="import-title" v-model="importTitle" type="text" placeholder="タイトルを入力" class="border rounded p-2 w-full" />
       </div>
-      <div style="margin-top: 1rem;">
-        <label for="import-markdown">マークダウン形式のテキスト:</label><br />
+      <div class="mt-4 space-y-1">
+        <label for="import-markdown">マークダウン形式のテキスト:</label>
         <textarea
           id="import-markdown"
           v-model="importMarkdown"
           rows="10"
-          style="width: 100%;"
+          class="w-full border rounded p-2"
         ></textarea>
       </div>
-      <div style="margin-top: 1rem;">
-        <button @click="importMaster">インポート</button>
+      <div class="mt-4">
+        <button class="btn" @click="importMaster">インポート</button>
       </div>
     </section>
   </div>
 </template>
 
-<style scoped lang="scss">
-section {
-  margin-bottom: 2rem;
-}
-textarea {
-  font-family: monospace;
-}
-</style>
+

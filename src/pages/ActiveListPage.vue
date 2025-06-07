@@ -32,27 +32,22 @@ const goToActiveDetail = (checklistId: string) => {
 </script>
 
 <template>
-  <div>
-    <h1>実行中</h1>
-    <button @click="refreshList">更新</button>
-    <ul v-if="activeChecklists.length">
+  <div class="space-y-4">
+    <h1 class="text-2xl font-bold">実行中</h1>
+    <button class="btn" @click="refreshList">更新</button>
+    <ul v-if="activeChecklists.length" class="space-y-2 list-none p-0">
       <li
         v-for="checklist in activeChecklists"
         :key="checklist.id"
-        style="margin-bottom: 0.5rem;"
+        class="border p-4 rounded bg-white shadow"
       >
-        <strong>{{ checklist.title }}</strong><br />
-        <small>開始: {{ new Date(checklist.startedAt).toLocaleString() }}</small>
-        <br />
-        <button @click="goToActiveDetail(checklist.id)">実行状況</button>
+        <strong class="block">{{ checklist.title }}</strong>
+        <small class="block">開始: {{ new Date(checklist.startedAt).toLocaleString() }}</small>
+        <button class="btn mt-2" @click="goToActiveDetail(checklist.id)">実行状況</button>
       </li>
     </ul>
     <p v-else>現在、実行中のチェックリストはありません。</p>
   </div>
 </template>
 
-<style scoped lang="scss">
-button {
-  margin-bottom: 1rem;
-}
-</style>
+

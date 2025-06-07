@@ -43,31 +43,32 @@ const markAsFinished = async () => {
 </script>
 
 <template>
-  <div>
-    <h1>実行状況</h1>
-    <div v-if="checklist">
-      <h2>{{ checklist.title }}</h2>
+  <div class="space-y-4">
+    <h1 class="text-2xl font-bold">実行状況</h1>
+    <div v-if="checklist" class="space-y-2">
+      <h2 class="text-xl font-semibold">{{ checklist.title }}</h2>
       <p>開始: {{ new Date(checklist.startedAt).toLocaleString() }}</p>
-      <ul>
+      <ul class="space-y-2 list-none p-0">
         <li
           v-for="entry in entries"
           :key="entry.id"
-          style="margin-bottom: 0.5rem;"
+          class="flex items-center"
         >
-          <label>
+          <label class="flex-1 flex items-center gap-2">
             <input
               type="checkbox"
               v-model="entry.checked"
               @change="toggleCheck(entry)"
+              class="mr-2"
             />
             {{ entry.content }}
           </label>
-          <span v-if="entry.checkedAt">
+          <span v-if="entry.checkedAt" class="text-sm">
             （チェック: {{ new Date(entry.checkedAt).toLocaleString() }}）
           </span>
         </li>
       </ul>
-        <button @click="markAsFinished">使用済みにする</button>
+      <button class="btn" @click="markAsFinished">使用済みにする</button>
     </div>
     <div v-else>
       <p>チェックリストが見つかりませんでした。</p>
@@ -75,19 +76,4 @@ const markAsFinished = async () => {
   </div>
 </template>
 
-<style scoped lang="scss">
-ul {
-  list-style: none;
-  padding: 0;
-}
-li {
-  display: flex;
-  align-items: center;
-}
-label {
-  flex: 1;
-}
-input[type='checkbox'] {
-  margin-right: 0.5rem;
-}
-</style>
+
