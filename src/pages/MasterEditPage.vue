@@ -33,6 +33,7 @@ onMounted(async () => {
       // チェックリスト項目をインデックス順に並べる
       masterForm.checklistItems = items.sort((a, b) => a.index - b.index)
     } else {
+      isEditing.value = false
       alert('指定されたテンプレートが見つかりませんでした。')
       router.push('/masters')
     }
